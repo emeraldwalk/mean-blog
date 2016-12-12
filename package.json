@@ -23,6 +23,7 @@
     "angular-ui-router": "^0.3.2",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
+    "ng1x-decorators": "git+https://github.com/emeraldwalk/ng1x-decorators.git",
     "semantic-ui": "^2.2.6",
     "systemjs": "^0.19.41"
   },
