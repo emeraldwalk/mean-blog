@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 
-mongoose.connect('mongodb://localhost/mean-blog');
+//mongoose.connect('mongodb://localhost/mean-blog');
 
 import { router as blogPostsRouter } from './models/blog_post.model';
 

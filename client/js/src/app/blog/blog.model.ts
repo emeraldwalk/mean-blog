@@ -1,8 +1,9 @@
 import { service, inject } from 'ng1x-decorators';
 import { IBlogPost } from '../../../../../entities';
 import { dispatch, getState } from '../../state/store';
-import { blogPostListRequest, blogPostListSuccess } from '../../state/blog/blog.actions';
-import { getPostInEdit, getPostsList } from '../../state/blog/blog.selectors';
+import { beginRequestList, successRequestList } from '../../state/entities/entity.actions';
+import { getEntityInEdit, getEntityList } from '../../state/entities/entity.selectors';
+import { BLOG_ACTIONS } from '../../state/blog/blog.actions';
 
 @service('blogModel')
 @inject('$http')
@@ -11,14 +12,14 @@ export class BlogModel {
 	}
 
 	public loadPosts(): void {
-		if(getState().isLoaded.blogPosts) {
+		if(getState().isLoaded.blogPost) {
 			console.log('Posts already loaded.');
 			return;
 		}
 
-		dispatch(blogPostListRequest());
+		dispatch(beginRequestList(BLOG_ACTIONS));
 		this._$http.get<Array<IBlogPost>>('/api/blog').then(response => {
-			dispatch(blogPostListSuccess(response.data))
+			dispatch(successRequestList(BLOG_ACTIONS, response.data));
 		});
 	}
 
@@ -27,11 +28,11 @@ export class BlogModel {
 	}
 
 	public getPostInEdit(): IBlogPost {
-		return getPostInEdit(getState());
+		return getEntityInEdit('blogPost')(getState());
 	}
 
 	public getPosts(): Array<IBlogPost> {
-		return getPostsList(getState()).data;
+		return getEntityList('blogPost')(getState()).data;
 	}
 
 	// public getPosts(): Array<any> {

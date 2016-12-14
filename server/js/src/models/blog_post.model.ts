@@ -1,14 +1,14 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 
-const blogPostSchema = new mongoose.Schema({
-	title: String,
-	slug: String,
-	content: String,
-	createdAt: Date
-});
+// const blogPostSchema = new mongoose.Schema({
+// 	title: String,
+// 	slug: String,
+// 	content: String,
+// 	createdAt: Date
+// });
 
-const BlogPost = mongoose.model('BlogPost', blogPostSchema);
+// export const BlogPost = mongoose.model('BlogPost', blogPostSchema);
 // new BlogPost({
 // 	title: 'test title',
 // 	slug: 'first-post',
@@ -16,7 +16,7 @@ const BlogPost = mongoose.model('BlogPost', blogPostSchema);
 // 	createdAt: new Date()
 // }).save();
 
-const router = express.Router();
+export const router = express.Router();
 
 router.get('/', (req, res) => {
 	res.json([{
@@ -24,11 +24,9 @@ router.get('/', (req, res) => {
 	}]);
 });
 
-router.get('/:slug', (req, res) => {
-	let slug = req.params.slug;
-	let post = BlogPost.findOne({ slug }).then((post) => {
-		res.json(post);
-	});
-});
-
-export { BlogPost, router };
+// router.get('/:slug', (req, res) => {
+// 	let slug = req.params.slug;
+// 	let post = BlogPost.findOne({ slug }).then((post) => {
+// 		res.json(post);
+// 	});
+// });

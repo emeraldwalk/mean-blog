@@ -4,7 +4,7 @@
         "moduleResolution": "node",
         "target": "es5",
         "noImplicitAny": false,
-        "sourceMap": false,
+        "sourceMap": true,
         "experimentalDecorators": true,
         "rootDir": "src",
         "outFile": "build/app.js"

@@ -19,7 +19,7 @@ System.config({
 			deps: ['angular']
 		},
 		'build/app.js': {
-			deps: ['angular-ui-router', 'ng1x-decorators']
+			deps: ['angular', 'angular-ui-router', 'ng1x-decorators', 'redux', 'reselect']
 		}
 	},
 	bundles: {

@@ -1,17 +1,21 @@
 import { IBlogPost } from '../../../../entities';
 
+export interface IInEditState {
+	blogPost: string;
+}
+
 export interface ILoadedState {
-	blogPosts: boolean
+	blogPost: boolean
 }
 
 export interface IEntityState {
-	blogPosts: {
+	blogPost: {
 		[id: string]: IBlogPost
 	}
 }
 
 export interface IAppState {
-	blogPostInEdit: string;
+	inEdit: IInEditState;
 	isLoaded: ILoadedState,
 	entities: IEntityState
 }
