@@ -17,7 +17,7 @@ export let routes = [
 
 		$stateProvider.state('app.blog', {
 			url: '/blog',
-			template: '<div>Blog</div>'
+			template: '<blog></blog>'
 		});
 
 		$stateProvider.state('app.signin', {

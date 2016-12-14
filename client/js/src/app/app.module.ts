@@ -1,5 +1,6 @@
 import { ngModule } from 'ng1x-decorators';
 import { AppComponent } from './app.component';
+import { BlogModule } from './blog/blog.module';
 import { routes } from './app.routes';
 
 @ngModule({
@@ -8,7 +9,7 @@ import { routes } from './app.routes';
 	components: [
 		AppComponent
 	],
-	dependencies: ['ui.router']
+	dependencies: ['ui.router', BlogModule]
 })
 export class AppModule {
 }

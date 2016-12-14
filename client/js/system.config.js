@@ -3,7 +3,9 @@ System.config({
 	map: {
 		'angular': '/lib/angular.js',
 		'angular-ui-router': '/lib/angular-ui-router.js',
-		'ng1x-decorators': '/lib/decorators.js'
+		'ng1x-decorators': '/lib/decorators.js',
+		'redux': '/lib/redux.min.js',
+		'reselect': '/lib/reselect.js'
 	},
 	meta: {
 		'angular': {
@@ -21,8 +23,8 @@ System.config({
 		}
 	},
 	bundles: {
-		'build/app.js': ['app.bootstrap']
+		'build/app.js': ['app/app.bootstrap']
 	}
 });
 
-System.import('app.bootstrap');
+System.import('app/app.bootstrap');
