@@ -1,14 +1,15 @@
-import { IEntity } from '../../../../../entities';
+import { IEntity, IEntityName, IEntityTypes } from '../../../../../entities';
 
 /**
  * Common interface for entity action types
 */
 export interface IEntityActionTypes<
-	TEntity extends IEntity,
+	TEntityName extends IEntityName,
 	TBeginEdit extends string,
 	TBeginCommit extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string> {
+	entityName: TEntityName;
 	beginEdit: TBeginEdit;
 	beginCommit: TBeginCommit;
 	beginRequestList: TBeginRequestList;
@@ -20,16 +21,18 @@ export interface IEntityActionTypes<
  * eg. const fooActions = createActionTypes('BEGIN_FOO_EDIT', 'BEGIN_FOO_COMMIT', 'BEGIN_REQUEST_LIST', 'SUCCESS_REQUEST_LIST');
  */
 export function createActionTypes<
-	TEntity extends IEntity,
+	TEntityName extends IEntityName,
 	TBeginEdit extends string,
 	TBeginCommit extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
+	entityName: TEntityName,
 	beginEdit: TBeginEdit,
 	beginCommit: TBeginCommit,
 	beginRequestList: TBeginRequestList,
-	successRequestList: TSuccessRequestList): IEntityActionTypes<TEntity, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList> {
+	successRequestList: TSuccessRequestList): IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList> {
 	return {
+		entityName,
 		beginEdit,
 		beginCommit,
 		beginRequestList,
@@ -51,21 +54,21 @@ export interface IBeginRequestListAction<TBeginRequestList extends string> {
 /** Request for entity list returned successfully. */
 export interface ISuccessRequestListAction<
 	TSuccessRequestList extends string,
-	TEntity extends IEntity> {
+	TEntityName extends IEntityName> {
 	type: TSuccessRequestList,
 	payload: {
-		entities: Array<TEntity>
+		entities: Array<IEntityTypes[TEntityName] & IEntity>
 	}
 }
 
 /** Action factory for begin entity list request. */
 export function beginRequestList<
-	TEntity extends IEntity,
+	TEntityName extends IEntityName,
 	TBeginEdit extends string,
 	TBeginCommit extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
-	actionTypes: IEntityActionTypes<TEntity, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>): IBeginRequestListAction<TBeginRequestList> {
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>): IBeginRequestListAction<TBeginRequestList> {
 
 	return {
 		type: actionTypes.beginRequestList
@@ -74,13 +77,13 @@ export function beginRequestList<
 
 /** Action factory for successful entity list return. */
 export function successRequestList<
-	TEntity extends IEntity,
+	TEntityName extends IEntityName,
 	TBeginEdit extends string,
 	TBeginCommit extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
-	actionTypes: IEntityActionTypes<TEntity, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>,
-	entities: Array<TEntity>): ISuccessRequestListAction<TSuccessRequestList, TEntity> {
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>,
+	entities: Array<IEntityTypes[TEntityName] & IEntity>): ISuccessRequestListAction<TSuccessRequestList, TEntityName> {
 
 	return {
 		type: actionTypes.successRequestList,
@@ -92,12 +95,12 @@ export function successRequestList<
 
 /** Action factory for begin entity edit. */
 export function beginEdit<
-	TEntity extends IEntity,
+	TEntityName extends IEntityName,
 	TBeginEdit extends string,
 	TBeginCommit extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
-	actionTypes: IEntityActionTypes<TEntity, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>,
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>,
 	id: string): IBeginEditAction<TBeginEdit> {
 
 	return {
