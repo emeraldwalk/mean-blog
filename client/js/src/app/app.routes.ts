@@ -1,3 +1,5 @@
+import { BlogModel } from './blog/blog.model';
+
 export let routes = [
 	'$locationProvider',
 	'$stateProvider',
@@ -16,8 +18,31 @@ export let routes = [
 		});
 
 		$stateProvider.state('app.blog', {
+			abstract: true,
 			url: '/blog',
 			template: '<blog></blog>'
+		});
+
+		$stateProvider.state('app.blog.post-list', {
+			url: '',
+			template: '<post-list posts="$ctrl.posts"></post-list>'
+		});
+
+		$stateProvider.state('app.blog.post-view', {
+			url: '/:slug',
+			template: '<post-view post="{title: \'Mock Post\'}"></post-view>'
+		});
+
+		$stateProvider.state('app.blog.post-edit', {
+			url: '/edit/:id',
+			template: '<post-edit post="$ctrl.inEdit" on-cancel="$ctrl.onCancelEdit(id)"></post-edit>',
+			resolve: {
+				block: ['$stateParams', 'blogModel', (
+					$stateParams: ng.ui.IStateParamsService & {id: string},
+					blogModel: BlogModel) => {
+					blogModel.editPost($stateParams.id);
+				}]
+			}
 		});
 
 		$stateProvider.state('app.signin', {

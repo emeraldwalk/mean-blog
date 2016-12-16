@@ -1,14 +1,53 @@
 import { IEntity, IEntityName } from '../../../../../entities';
-import { IEntityActionTypes, IBeginRequestListAction, ISuccessRequestListAction } from './entity.actions';
+import {
+	IEntityActionTypes,
+	IBeginEditAction,
+	ICancelEditAction,
+	ISuccessSaveAction,
+	IBeginRequestListAction,
+	ISuccessRequestListAction
+} from './entity.actions';
+
+export function reduceInEdit<
+	TEntityName extends IEntityName,
+	TBeginEdit extends string,
+	TCancelEdit extends string,
+	TBeginSave extends string,
+	TSuccessSave extends string,
+	TBeginRequestList extends string,
+	TSuccessRequestList extends string>(
+
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TCancelEdit, TBeginSave, TSuccessSave, TBeginRequestList, TSuccessRequestList>) {
+
+	return (
+		state: string = '',
+		action: IBeginEditAction<TBeginEdit> | ICancelEditAction<TCancelEdit> | ISuccessSaveAction<TSuccessSave>) => {
+
+		if(action.type === actionTypes.beginEdit) {
+			return action.id;
+		}
+		else if(action.type === actionTypes.cancelEdit) {
+			return '';
+		}
+		else if(action.type === actionTypes.successSave) {
+			return '';
+		}
+
+		return state;
+	}
+}
 
 /** Reducer for entity isLoaded. */
 export function reduceIsLoaded<
 	TEntityName extends IEntityName,
 	TBeginEdit extends string,
-	TBeginCommit extends string,
+	TCancelEdit extends string,
+	TBeginSave extends string,
+	TSuccessSave extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
-	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>) {
+
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TCancelEdit, TBeginSave, TSuccessSave, TBeginRequestList, TSuccessRequestList>) {
 
 	return (
 		state: boolean = false,
@@ -28,10 +67,13 @@ export function reduceIsLoaded<
 export function reduceEntities<
 	TEntityName extends IEntityName,
 	TBeginEdit extends string,
-	TBeginCommit extends string,
+	TCancelEdit extends string,
+	TBeginSave extends string,
+	TSuccessSave extends string,
 	TBeginRequestList extends string,
 	TSuccessRequestList extends string>(
-	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TBeginCommit, TBeginRequestList, TSuccessRequestList>) {
+
+	actionTypes: IEntityActionTypes<TEntityName, TBeginEdit, TCancelEdit, TBeginSave, TSuccessSave, TBeginRequestList, TSuccessRequestList>) {
 
 	return (
 		state: { [id: string]: TEntityName } = {},

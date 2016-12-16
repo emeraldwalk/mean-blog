@@ -1,5 +1,5 @@
 export interface IEntity {
-	_id: string;
+	_id?: string;
 }
 
 export interface IEntityTypes {
@@ -11,6 +11,5 @@ export type IEntityName = keyof IEntityTypes;
 export interface IBlogPost extends IEntity {
 	title: string,
 	slug: string,
-	content: string,
-	createdAt: Date
+	content: string
 }

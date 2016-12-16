@@ -1,14 +1,16 @@
 import { service, inject } from 'ng1x-decorators';
 import { IBlogPost } from '../../../../../entities';
 import { dispatch, getState } from '../../state/store';
-import { beginRequestList, successRequestList } from '../../state/entities/entity.actions';
+import { beginEdit, cancelEdit, beginRequestList, successRequestList } from '../../state/entities/entity.actions';
 import { getEntityInEdit, getEntityList } from '../../state/entities/entity.selectors';
 import { BLOG_ACTIONS } from '../../state/blog/blog.actions';
 
 @service('blogModel')
-@inject('$http')
+@inject('$http', '$state')
 export class BlogModel {
-	constructor(private _$http: ng.IHttpService) {
+	constructor(
+		private _$http: ng.IHttpService,
+		private _$state: ng.ui.IStateService) {
 	}
 
 	public loadPosts(): void {
@@ -23,6 +25,15 @@ export class BlogModel {
 		});
 	}
 
+	public editPost(id: string): void {
+		dispatch(beginEdit(BLOG_ACTIONS, id));
+	}
+
+	public cancelEditPost(id: string): void {
+		dispatch(cancelEdit(BLOG_ACTIONS, id));
+		this._$state.transitionTo('app.blog.post-list');
+	}
+
 	public getTitle(): string {
 		return 'My Blog';
 	}
@@ -34,10 +45,4 @@ export class BlogModel {
 	public getPosts(): Array<IBlogPost> {
 		return getEntityList('blogPost')(getState()).data;
 	}
-
-	// public getPosts(): Array<any> {
-	// 	return this._$http.get<Array<any>>('/api/blog').then(response => {
-	// 		return response.data;
-	// 	});
-	// }
 }

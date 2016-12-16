@@ -1,27 +1,29 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
+import { IBlogPost } from '../../../../entities';
 
-// const blogPostSchema = new mongoose.Schema({
-// 	title: String,
-// 	slug: String,
-// 	content: String,
-// 	createdAt: Date
-// });
+const blogPostSchema = new mongoose.Schema({
+	title: String,
+	slug: String,
+	content: String
+}, {
+	timestamps: true
+});
 
-// export const BlogPost = mongoose.model('BlogPost', blogPostSchema);
-// new BlogPost({
-// 	title: 'test title',
-// 	slug: 'first-post',
-// 	content: 'This is my first post',
-// 	createdAt: new Date()
-// }).save();
+export const BlogPostModel = mongoose.model<mongoose.Document & IBlogPost>(
+	'BlogPost',
+	blogPostSchema);
 
 export const router = express.Router();
 
 router.get('/', (req, res) => {
-	res.json([{
-		title: 'List posts'
-	}]);
+	BlogPostModel.find().then(posts => {
+		res.json(posts);
+	})
+
+	// res.json([{
+	// 	title: 'List posts'
+	// }]);
 });
 
 // router.get('/:slug', (req, res) => {

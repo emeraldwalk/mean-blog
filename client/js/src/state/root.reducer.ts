@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import { IEntityState, IAppState, ILoadedState } from './state';
+import { IEntityState, IAppState, ILoadedState, IInEditState } from './state';
 
-import { reduceIsLoaded, reduceEntities } from './entities/entity.reducers';
+import { reduceInEdit, reduceIsLoaded, reduceEntities } from './entities/entity.reducers';
 import { BLOG_ACTIONS } from './blog/blog.actions';
+
+export const inEdit = combineReducers<IInEditState>({
+	blogPost: reduceInEdit(BLOG_ACTIONS)
+});
 
 export const isLoaded = combineReducers<ILoadedState>({
 	blogPost: reduceIsLoaded(BLOG_ACTIONS)
@@ -13,7 +17,7 @@ export const entities = combineReducers<IEntityState>({
 });
 
 export const rootReducer = combineReducers<IAppState>({
-	//blogPostInEdit: undefined,
+	inEdit,
 	isLoaded,
 	entities
 });

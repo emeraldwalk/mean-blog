@@ -1,0 +1,4 @@
+<article ng-repeat="post in $ctrl.posts">
+	<h2><a ui-sref="app.blog.post-view({slug: post.slug})">{{post.title}}</a></h2>
+	<a ui-sref="app.blog.post-edit({id: post._id})">Edit</a>
+</article>

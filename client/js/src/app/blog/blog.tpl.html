@@ -1,7 +1,4 @@
 <section>
 	<header>{{$ctrl.title}}</header>
-	{{$ctrl.posts}}
-	<article ng-repeat="post in $ctrl.posts">
-		<h2>{{post.title}}</h2>
-	</article>
+	<ui-view></ui-view>
 </section>
