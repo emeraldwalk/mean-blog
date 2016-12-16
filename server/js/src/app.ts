@@ -4,13 +4,13 @@ import * as mongoose from 'mongoose';
 
 mongoose.connect('mongodb://localhost/mean-blog');
 
-// TODO: Remove this once we really get up and running
-import { run } from './migrations/blog.migrations';
-mongoose.connection.once('connected', () => {
-	mongoose.connection.db.dropCollection('blogposts').then(() => {
-		run();
-	});
-});
+// // TODO: Remove this once we really get up and running
+// import { run } from './migrations/blog.migrations';
+// mongoose.connection.once('connected', () => {
+// 	mongoose.connection.db.dropCollection('blogposts').then(() => {
+// 		run();
+// 	});
+// });
 
 import { router as blogPostsRouter } from './models/blog_post.model';
 
